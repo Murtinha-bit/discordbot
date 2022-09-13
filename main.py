@@ -6,7 +6,9 @@ import nextcord
 from nextcord.ext import commands
 from nextcord import FFmpegPCMAudio
 
-from api_variables import *
+from variables import api_variables
+
+
 
 intents = nextcord.Intents.default()
 intents.message_content = True
@@ -19,7 +21,7 @@ def get_cat():
     CATurl="https://api.thecatapi.com/v1/images/search"
 
     headers = {
-        'x-rapidapi-key' : CATTOKEN,
+        'x-rapidapi-key' : api_variables.CATTOKEN,
         'x-rapidapi-host': 'api.thecatapi.com'
     }
 
@@ -92,7 +94,7 @@ async def leave(ctx):
 
 @client.command(pass_context= True)
 async def pause(ctx):
-    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    voice = nextcord.utils.get(client.voice_clients, guild=ctx.guild)
     if voice.is_playing():
         voice.pause()
     else:
@@ -100,7 +102,7 @@ async def pause(ctx):
 
 @client.command(pass_context= True)
 async def resume(ctx):
-    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    voice = nextcord.utils.get(client.voice_clients, guild=ctx.guild)
     if voice.is_paused():
         voice.resume()
     else:
@@ -108,7 +110,7 @@ async def resume(ctx):
 
 @client.command(pass_context= True)
 async def stop(ctx):
-    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    voice = nextcord.utils.get(client.voice_clients, guild=ctx.guild)
     voice.stop()
 
 @client.command(pass_context= True)
@@ -132,4 +134,4 @@ async def pokemon(ctx):
     frase = poke_info("Pikachu")
     await ctx.send(frase)
 
-client.run(TOKEN)
+client.run(api_variables.TOKEN)
